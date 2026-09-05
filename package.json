@@ -7,7 +7,8 @@
 		"mobile": "pnpm --filter mobile",
 		"web": "pnpm --filter web",
 		"ext": "pnpm --filter ext",
-		"dev": "concurrently \"pnpm mobile dev\" \"pnpm web dev\""
+		"dev": "concurrently \"pnpm mobile dev\" \"pnpm web dev\"",
+		"typecheck": "pnpm -r --if-present typecheck"
 	},
 	"keywords": [],
 	"author": "",
@@ -19,5 +20,8 @@
 			"onFail": "download"
 		}
 	},
-	"type": "module"
+	"type": "module",
+	"devDependencies": {
+		"typescript": "6.0.3"
+	}
 }
