@@ -1,27 +1,38 @@
 {
-	"name": "media-tracker",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"mobile": "pnpm --filter mobile",
-		"web": "pnpm --filter web",
-		"ext": "pnpm --filter ext",
-		"dev": "concurrently \"pnpm mobile dev\" \"pnpm web dev\"",
-		"typecheck": "pnpm -r --if-present typecheck"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"devEngines": {
-		"packageManager": {
-			"name": "pnpm",
-			"version": "11.21.0",
-			"onFail": "download"
-		}
-	},
-	"type": "module",
-	"devDependencies": {
-		"typescript": "6.0.3"
-	}
+  "name": "media-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "mobile": "pnpm --filter mobile",
+    "web": "pnpm --filter web",
+    "ext": "pnpm --filter ext",
+    "dev": "concurrently \"pnpm mobile dev\" \"pnpm web dev\"",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.21.0",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "devDependencies": {
+    "eslint": "^9.39.5",
+    "eslint-config-expo": "^57.0.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "prettier": "^3.9.6",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.69.0"
+  }
 }
