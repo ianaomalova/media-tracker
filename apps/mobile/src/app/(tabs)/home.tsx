@@ -1,18 +1,10 @@
-import { View, Text } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Text } from 'react-native';
+import Screen from '@/components/Screen';
 
 export default function HomeScreen() {
-  const insets = useSafeAreaInsets();
-
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingTop: insets.top,
-        paddingBottom: insets.bottom,
-      }}
-    >
-      <Text>HELLO</Text>
-    </View>
+    <Screen edges={['top']}>
+      <Text>HOME78</Text>
+    </Screen>
   );
 }
