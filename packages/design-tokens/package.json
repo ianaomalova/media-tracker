@@ -1,0 +1,11 @@
+{
+  "name": "@app/design-tokens",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

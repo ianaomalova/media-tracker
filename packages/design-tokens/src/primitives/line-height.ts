@@ -1,0 +1,10 @@
+export const lineHeight = {
+  xs: 16,
+  sm: 20,
+  md: 24,
+  lg: 28,
+  xl: 32,
+  '2xl': 36,
+  '3xl': 40,
+  '4xl': 48,
+} as const;

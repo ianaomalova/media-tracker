@@ -234,6 +234,9 @@ importers:
 
   apps/mobile:
     dependencies:
+      '@app/design-tokens':
+        specifier: workspace:*
+        version: link:../../packages/design-tokens
       '@app/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -319,6 +322,8 @@ importers:
       '@app/types':
         specifier: workspace:*
         version: link:../types
+
+  packages/design-tokens: {}
 
   packages/types: {}
 

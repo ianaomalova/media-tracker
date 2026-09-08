@@ -1,3 +1,4 @@
+import { spacing } from '@app/design-tokens';
 import { View, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -8,7 +9,7 @@ export default function ProfileScreen() {
     <View
       style={{
         flex: 1,
-        paddingTop: insets.top,
+        paddingTop: spacing[0],
         paddingBottom: insets.bottom,
       }}
     >
