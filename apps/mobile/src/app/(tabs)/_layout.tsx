@@ -12,6 +12,10 @@ export default function TabsLayout() {
         <NativeTabs.Trigger.Label>Профиль</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="person.fill" />
       </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="search" role="search">
+        <NativeTabs.Trigger.Label>Search</NativeTabs.Trigger.Label>
+      </NativeTabs.Trigger>
     </NativeTabs>
   );
 }
