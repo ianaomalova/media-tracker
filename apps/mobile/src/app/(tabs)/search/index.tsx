@@ -7,8 +7,6 @@ export default function SearchScreen() {
 
   return (
     <>
-      <Stack.Title>Search</Stack.Title>
-
       <Stack.SearchBar
         placement="automatic"
         placeholder="Search media"

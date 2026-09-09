@@ -1,6 +1,8 @@
+import { colors } from '../primitives/colors';
+
 export const semanticColors = {
-  primary: '#ffffff',
-  secondary: '#333333',
+  primary: colors.white,
+  secondary: '#323431',
   text: {
     primary: '#fcfeff',
     secondary: '#040106',
