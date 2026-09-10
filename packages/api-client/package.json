@@ -1,0 +1,19 @@
+{
+  "name": "@app/api-client",
+  "scripts": {
+    "generate": "orval"
+  },
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "orval": "^8.30.0"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.102.8",
+    "axios": "^1.20.0"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
