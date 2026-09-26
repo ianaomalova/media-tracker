@@ -6,7 +6,7 @@ interface Props {
   edges?: Array<'top' | 'bottom' | 'left' | 'right'>;
 }
 
-export default function Screen({ children, edges = ['top'] }: Props) {
+export default function Screen({ children, edges }: Props) {
   return (
     <SafeAreaView
       edges={edges}

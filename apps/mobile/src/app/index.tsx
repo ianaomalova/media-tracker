@@ -11,6 +11,7 @@ export default function HomeScreen() {
         flex: 1,
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
+        backgroundColor: 'black',
       }}
     >
       <Redirect href="/(tabs)/home" />
