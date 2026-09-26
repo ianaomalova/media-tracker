@@ -6,7 +6,11 @@ export default defineConfig({
       target: 'http://localhost:4000/api/docs-json',
     },
     output: {
-      target: './src/generated/api.ts',
+      mode: 'tags-split',
+
+      target: './src/generated/endpoints.ts',
+
+      schemas: './src/generated/model',
 
       client: 'react-query',
 

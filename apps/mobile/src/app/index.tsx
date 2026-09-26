@@ -13,7 +13,7 @@ export default function HomeScreen() {
         paddingBottom: insets.bottom,
       }}
     >
-      <Redirect href="/(tabs)/home" />;
+      <Redirect href="/(tabs)/home" />
     </View>
   );
 }
