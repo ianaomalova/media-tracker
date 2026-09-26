@@ -14,6 +14,8 @@ import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
 import { LinearGradient } from 'expo-linear-gradient';
 import MediaTypeBadge from './MediaTypeBadge';
 import { useState } from 'react';
+import { Play, Plus } from 'lucide-react-native';
+import Button from './Button';
 
 export default function Carousel() {
   const { width } = useWindowDimensions();
@@ -39,10 +41,23 @@ export default function Carousel() {
         overScrollMode="never"
         directionalLockEnabled
       />
-      <View style={styles.pagination}>
-        {SAMPLE_TITLES.map((item, index) => (
-          <View key={item.id} style={[styles.dot, index === activeIndex && styles.activeDot]} />
-        ))}
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginTop: 10,
+        }}
+      >
+        <View style={styles.actions}>
+          <Button icon={Play}>Watch Movie</Button>
+          <Button icon={Plus} variant="secondary" />
+        </View>
+        <View style={styles.pagination}>
+          {SAMPLE_TITLES.map((item, index) => (
+            <View key={item.id} style={[styles.dot, index === activeIndex && styles.activeDot]} />
+          ))}
+        </View>
       </View>
     </View>
   );
@@ -105,7 +120,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     gap: 8,
-    marginTop: 12,
     marginRight: 20,
   },
 
@@ -119,5 +133,11 @@ const styles = StyleSheet.create({
   activeDot: {
     backgroundColor: 'white',
     width: 18,
+  },
+
+  actions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
 });
