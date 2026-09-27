@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    paddingBottom: 5,
+    paddingBottom: 90,
   },
 });
