@@ -12,6 +12,7 @@ export default function Screen({ children, edges }: Props) {
       edges={edges}
       style={{
         flex: 1,
+        paddingBottom: 90,
       }}
     >
       {children}

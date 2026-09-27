@@ -3,7 +3,7 @@ import { NativeTabs } from 'expo-router/build/native-tabs';
 export default function TabsLayout() {
   return (
     <NativeTabs tintColor="white">
-      <NativeTabs.Trigger name="home">
+      <NativeTabs.Trigger name="home" disableAutomaticContentInsets>
         <NativeTabs.Trigger.Label>For You</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="house" />
       </NativeTabs.Trigger>
