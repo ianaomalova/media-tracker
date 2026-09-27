@@ -8,6 +8,8 @@ export const semanticColors = {
     secondary: '#040106',
     ['little-muted']: '#a5a3a6',
     muted: '#707070',
+    placeholder: '#65606B',
+    placeholderIcon: '#81788B',
   },
   bg: {
     base: '#020003',

@@ -1,16 +1,30 @@
 import type { ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react-native';
-import { Pressable, StyleSheet, Text, type PressableProps } from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  type PressableProps,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
 import { colors, fontSize, fontWeight, semanticColors } from '@app/design-tokens';
 
-interface Props extends PressableProps {
+interface Props extends Omit<PressableProps, 'style'> {
   children?: ReactNode;
   icon?: LucideIcon;
   variant?: 'primary' | 'secondary';
   iconOnly?: boolean;
+  style?: StyleProp<ViewStyle>;
 }
 
-export default function Button({ children, icon: Icon, variant = 'primary', ...props }: Props) {
+export default function Button({
+  children,
+  icon: Icon,
+  variant = 'primary',
+  style,
+  ...props
+}: Props) {
   const isPrimary = variant === 'primary';
   const iconOnly = Boolean(Icon && !children);
 
@@ -22,6 +36,7 @@ export default function Button({ children, icon: Icon, variant = 'primary', ...p
         iconOnly && styles.iconOnly,
         isPrimary ? styles.primary : styles.secondary,
         pressed && styles.pressed,
+        style,
       ]}
     >
       {Icon && <Icon size={22} strokeWidth={2} color={isPrimary ? colors.black : colors.white} />}
