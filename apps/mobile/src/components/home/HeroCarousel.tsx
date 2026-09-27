@@ -2,7 +2,6 @@ import {
   StyleSheet,
   useWindowDimensions,
   View,
-  Text,
   type NativeSyntheticEvent,
   type NativeScrollEvent,
 } from 'react-native';
@@ -149,16 +148,20 @@ function HeroSlide({
         colors={['transparent', 'rgba(0,0,0,0.3)', 'rgba(0,0,0,0.95)']}
         style={StyleSheet.absoluteFill}
       />
-      <Animated.View style={[styles.content, contentStyle]}>
-        <Text style={styles.title}>{item.name}</Text>
+      <View style={styles.content}>
+        <Animated.Text style={[styles.title, contentStyle]}>{item.name}</Animated.Text>
         <View style={{ gap: 5 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
             <MediaTypeBadge type={item.type} />
-            <Text style={styles.meta}>Thrillers · Dramas · Action</Text>
+            <Animated.Text style={[styles.meta, contentStyle]}>
+              Thrillers · Dramas · Action
+            </Animated.Text>
           </View>
-          <Text style={styles.description}>When an overachieving college senior...</Text>
+          <Animated.Text style={[styles.description, contentStyle]}>
+            When an overachieving college senior...
+          </Animated.Text>
         </View>
-      </Animated.View>
+      </View>
     </View>
   );
 }
