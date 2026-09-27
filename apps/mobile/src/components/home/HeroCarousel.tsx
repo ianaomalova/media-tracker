@@ -12,14 +12,16 @@ import type { TitleListItemResponse } from '@app/api-client';
 import { Image } from 'expo-image';
 import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
 import { LinearGradient } from 'expo-linear-gradient';
-import MediaTypeBadge from './MediaTypeBadge';
+import MediaTypeBadge from '../ui/MediaTypeBadge';
 import { useState } from 'react';
 import { Play, Plus } from 'lucide-react-native';
-import Button from './Button';
+import Button from '../ui/Button';
 
 export default function Carousel() {
   const { width } = useWindowDimensions();
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const activeItem = SAMPLE_TITLES[activeIndex];
 
   const handleMomentumScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
@@ -50,8 +52,25 @@ export default function Carousel() {
         }}
       >
         <View style={styles.actions}>
-          <Button icon={Play}>Watch Movie</Button>
-          <Button icon={Plus} variant="secondary" />
+          <Button
+            icon={Play}
+            onPress={() => {
+              if (!activeItem) return;
+
+              console.log('Open:', activeItem.id);
+            }}
+          >
+            Watch Movie
+          </Button>
+          <Button
+            icon={Plus}
+            variant="secondary"
+            onPress={() => {
+              if (!activeItem) return;
+
+              console.log('Add:', activeItem.id);
+            }}
+          />
         </View>
         <View style={styles.pagination}>
           {SAMPLE_TITLES.map((item, index) => (
@@ -87,7 +106,7 @@ function HeroSlide({ item, width }: { item: TitleListItemResponse; width: number
 
 const styles = StyleSheet.create({
   slide: {
-    height: 600,
+    height: 450,
   },
 
   content: {

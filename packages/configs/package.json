@@ -1,5 +1,5 @@
 {
-  "name": "@app/types",
+  "name": "@app/configs",
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
@@ -9,6 +9,6 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@app/api-client": "workspace:*"
+    "@app/types": "workspace:*"
   }
 }

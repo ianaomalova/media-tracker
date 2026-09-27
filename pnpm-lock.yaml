@@ -237,6 +237,9 @@ importers:
       '@app/api-client':
         specifier: workspace:*
         version: link:../../packages/api-client
+      '@app/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
       '@app/design-tokens':
         specifier: workspace:*
         version: link:../../packages/design-tokens
@@ -342,6 +345,12 @@ importers:
         specifier: ^8.30.0
         version: 8.30.0(prettier@3.9.6)(supports-color@8.1.1)(typescript@6.0.3)
 
+  packages/configs:
+    dependencies:
+      '@app/types':
+        specifier: workspace:*
+        version: link:../types
+
   packages/constants:
     dependencies:
       '@app/api-client':
@@ -353,7 +362,11 @@ importers:
 
   packages/design-tokens: {}
 
-  packages/types: {}
+  packages/types:
+    dependencies:
+      '@app/api-client':
+        specifier: workspace:*
+        version: link:../api-client
 
 packages:
 
