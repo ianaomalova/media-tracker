@@ -1,21 +1,28 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import TitleCard from './TitleCard';
-import { SAMPLE_TITLES } from '@/mock.data';
 import GlassButton from '@/components/ui/GlassButton';
 import { ChevronRight } from 'lucide-react-native';
 import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
+import type { TitleListItemResponse } from '@app/api-client';
 
-export default function TitleSection() {
+interface Props {
+  items: TitleListItemResponse[];
+  heading: string;
+}
+
+export default function TitleSection({ items, heading }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.heading}>Top picks for you</Text>
-        <GlassButton>
-          <ChevronRight color={semanticColors.text.primary} />
-        </GlassButton>
+        <Text style={styles.heading}>{heading}</Text>
+        {items?.length > 0 && (
+          <GlassButton>
+            <ChevronRight color={semanticColors.text.primary} />
+          </GlassButton>
+        )}
       </View>
       <FlatList
-        data={SAMPLE_TITLES}
+        data={items}
         renderItem={({ item }) => <TitleCard item={item} />}
         keyExtractor={(item) => item.id}
         horizontal

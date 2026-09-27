@@ -1,4 +1,3 @@
-import { SAMPLE_TITLES } from '@/mock.data';
 import {
   FlatList,
   StyleSheet,
@@ -17,11 +16,15 @@ import { useState } from 'react';
 import { Play, Plus } from 'lucide-react-native';
 import Button from '../ui/Button';
 
-export default function Carousel() {
+interface Props {
+  items: TitleListItemResponse[];
+}
+
+export default function Carousel({ items }: Props) {
   const { width } = useWindowDimensions();
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const activeItem = SAMPLE_TITLES[activeIndex];
+  const activeItem = items[activeIndex];
 
   const handleMomentumScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
@@ -32,7 +35,7 @@ export default function Carousel() {
   return (
     <View>
       <FlatList
-        data={SAMPLE_TITLES}
+        data={items}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
@@ -73,7 +76,7 @@ export default function Carousel() {
           />
         </View>
         <View style={styles.pagination}>
-          {SAMPLE_TITLES.map((item, index) => (
+          {items.map((item, index) => (
             <View key={item.id} style={[styles.dot, index === activeIndex && styles.activeDot]} />
           ))}
         </View>
