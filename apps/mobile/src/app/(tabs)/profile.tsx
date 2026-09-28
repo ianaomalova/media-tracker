@@ -15,9 +15,17 @@ import {
 import ProfileMenuSection from '@/components/profile/ProfileMenuSection';
 import ProfileMenuItem from '@/components/profile/ProfileMenuItem';
 import { useAuthStore } from '@/lib/auth/auth-store';
+import { useRouter } from 'expo-router';
 
 export default function ProfileScreen() {
-  const signOut = useAuthStore((state) => state.status);
+  const signOut = useAuthStore((state) => state.signOut);
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.replace('/(auth)/login');
+  };
+
   return (
     <Screen edges={[]}>
       <ScrollView showsVerticalScrollIndicator={false} contentInsetAdjustmentBehavior="never">
@@ -61,7 +69,7 @@ export default function ProfileScreen() {
               label="Log Out"
               danger
               showDivider={false}
-              onPress={() => signOut}
+              onPress={() => void handleSignOut()}
             />
           </ProfileMenuSection>
         </View>
