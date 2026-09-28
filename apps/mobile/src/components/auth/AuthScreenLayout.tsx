@@ -58,7 +58,7 @@ export default function AuthScreenLayout({ children, type }: Props) {
 
 const styles = StyleSheet.create({
   form: {
-    marginTop: 50,
+    marginTop: 40,
     gap: 16,
   },
 
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 
   heroImage: {
     position: 'absolute',
-    top: 60,
+    top: 80,
     left: 0,
     right: 0,
 
@@ -82,12 +82,12 @@ const styles = StyleSheet.create({
   },
 
   loginHeroImage: {
-    top: 45,
+    top: 60,
     height: 170,
   },
 
   header: {
-    marginTop: 200,
+    marginTop: 220,
   },
 
   title: {
