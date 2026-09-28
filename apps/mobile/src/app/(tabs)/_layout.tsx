@@ -8,12 +8,12 @@ export default function TabsLayout() {
         <NativeTabs.Trigger.Icon sf="house" />
       </NativeTabs.Trigger>
 
-      <NativeTabs.Trigger name="watchlist">
+      <NativeTabs.Trigger name="watchlist" disableAutomaticContentInsets>
         <NativeTabs.Trigger.Label>Watchlist</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="heart" />
       </NativeTabs.Trigger>
 
-      <NativeTabs.Trigger name="profile">
+      <NativeTabs.Trigger name="profile" disableAutomaticContentInsets>
         <NativeTabs.Trigger.Label>Account</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="person" />
       </NativeTabs.Trigger>
