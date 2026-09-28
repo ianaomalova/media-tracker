@@ -1,31 +1,30 @@
-import { View, StyleSheet, Text } from 'react-native';
-import Input from '../ui/Input';
-import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
-import Button from '../ui/Button';
-import { Mail, Lock } from 'lucide-react-native';
-import { Link } from 'expo-router';
-import { Controller, useForm } from 'react-hook-form';
-import { useRegister } from './useRegister';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { registerSchema, type RegisterFormValues } from '@app/validation';
+import { StyleSheet, Text } from 'react-native';
 import AuthScreenLayout from './AuthScreenLayout';
+import { Controller, useForm } from 'react-hook-form';
+import Input from '../ui/Input';
+import { Mail, Lock } from 'lucide-react-native';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { loginSchema, type LoginFormValues } from '@app/validation';
+import { Link } from 'expo-router';
+import { fontSize, semanticColors } from '@app/design-tokens';
+import Button from '../ui/Button';
+import { useLogin } from './useLogin';
 
-export default function RegisterForm() {
-  const { control, handleSubmit } = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
+export default function LoginForm() {
+  const { onSubmit, isPending } = useLogin();
+
+  const { control, handleSubmit } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
 
     defaultValues: {
       email: '',
       password: '',
-      confirmPassword: '',
     },
     mode: 'onChange',
   });
 
-  const { onSubmit, isPending } = useRegister();
-
   return (
-    <AuthScreenLayout type="register">
+    <AuthScreenLayout type="login">
       <Controller
         control={control}
         name="email"
@@ -60,35 +59,23 @@ export default function RegisterForm() {
         )}
       />
 
-      <Controller
-        control={control}
-        name="confirmPassword"
-        render={({ field, fieldState }) => (
-          <Input
-            label="Confirm Password"
-            placeholder="Confirm your password"
-            icon={Lock}
-            secureTextEntry
+      <Link href="/" style={styles.forgotPasswordLink}>
+        Forgot password?
+      </Link>
 
-            value={field.value}
-            onChangeText={field.onChange}
-            onBlur={field.onBlur}
-            error={fieldState.error?.message}
-          />
-        )}
-      />
       <Button
         variant="primary"
         style={styles.button}
         onPress={handleSubmit(onSubmit)}
         disabled={isPending}
       >
-        {isPending ? 'Creating account…' : 'Sign Up'}
+        {isPending ? 'Logging in…' : 'Login'}
       </Button>
+
       <Text style={styles.loginLinkText}>
-        Already have an account?{'  '}
-        <Link href="/login" style={styles.loginLink}>
-          Log in
+        Don't have an account?{'  '}
+        <Link href="/register" style={styles.loginLink}>
+          Sign up
         </Link>
       </Text>
     </AuthScreenLayout>
@@ -96,23 +83,30 @@ export default function RegisterForm() {
 }
 
 const styles = StyleSheet.create({
+  forgotPasswordLink: {
+    alignSelf: 'flex-end',
+    marginTop: 10,
+
+    fontSize: fontSize.sm,
+    color: '#2EA8FF',
+  },
+
   loginLinkText: {
+    marginTop: 40,
+
     fontSize: fontSize.sm,
     color: semanticColors.text['little-muted'],
     textAlign: 'center',
-    marginTop: 26,
   },
 
   loginLink: {
-    fontSize: fontSize.sm,
-    color: '#B65CFF',
-    textAlign: 'center',
-    fontWeight: fontWeight.bold,
+    color: '#2EA8FF',
+    fontWeight: '600',
   },
 
   button: {
     borderRadius: 12,
     alignSelf: 'stretch',
-    marginTop: 16,
+    marginTop: 24,
   },
 });

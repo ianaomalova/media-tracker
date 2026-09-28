@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 export const registerSchema = z
   .object({
-    email: z.email('Wrong email'),
-    password: z.string().min(6, 'Minimum 8 symbols'),
+    email: z.email('Enter a valid email'),
+    password: z.string().min(6, 'Minimum 6 symbols'),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
