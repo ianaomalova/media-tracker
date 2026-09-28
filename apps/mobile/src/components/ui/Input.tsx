@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     fontSize: 16,
     fontWeight: 'bold',
-    color: colors.gray[900],
+    color: semanticColors.text.primary,
   },
 
   inputError: {

@@ -7,8 +7,46 @@ import Button from '../ui/Button';
 import { Mail, Lock } from 'lucide-react-native';
 import { Link } from 'expo-router';
 import { Image } from 'expo-image';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { registerSchema, type RegisterFormValues } from '@app/validation';
+import { useAuthMobileRegister } from '@app/api-client';
+import { saveTokens } from '@/lib/auth/auth-storage';
 
 export default function RegisterForm() {
+  const { control, handleSubmit } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+
+    defaultValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+    mode: 'onChange',
+  });
+
+  const onSubmit = (data: RegisterFormValues) => {
+    register(
+      {
+        data: {
+          email: data.email,
+          password: data.password,
+        },
+      },
+      {
+        onSuccess: async (response) => {
+          await saveTokens(response.accessToken, response.refreshToken);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+    );
+  };
+
+  const { mutate: register, isError, isPending } = useAuthMobileRegister();
+
   return (
     <View>
       <LinearGradient
@@ -30,9 +68,57 @@ export default function RegisterForm() {
           </Text>
         </View>
         <View style={styles.inputs}>
-          <Input label="Email" icon={Mail} placeholder="Enter your email" />
-          <Input label="Password" icon={Lock} placeholder="Enter your password" />
-          <Input label="Confirm Password" icon={Lock} placeholder="Confirm your password" />
+          <Controller
+            control={control}
+            name="email"
+            render={({ field, fieldState }) => (
+              <Input
+                label="Email"
+                placeholder="Enter your email"
+                icon={Mail}
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="password"
+            render={({ field, fieldState }) => (
+              <Input
+                label="Password"
+                placeholder="Enter your password"
+                icon={Lock}
+                secureTextEntry
+
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="confirmPassword"
+            render={({ field, fieldState }) => (
+              <Input
+                label="Confirm Password"
+                placeholder="Confirm your password"
+                icon={Lock}
+                secureTextEntry
+
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                error={fieldState.error?.message}
+              />
+            )}
+          />
         </View>
         <Button
           variant="primary"
@@ -42,6 +128,7 @@ export default function RegisterForm() {
             marginHorizontal: 12,
             marginTop: 16,
           }}
+          onPress={handleSubmit(onSubmit)}
         >
           Sign Up
         </Button>
