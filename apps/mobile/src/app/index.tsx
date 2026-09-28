@@ -1,20 +1,12 @@
 import { Redirect } from 'expo-router';
-import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useAuthStore } from '@/lib/auth/auth-store';
 
 export default function HomeScreen() {
-  const insets = useSafeAreaInsets();
+  const status = useAuthStore((state) => state.status);
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        paddingTop: insets.top,
-        paddingBottom: insets.bottom,
-        backgroundColor: 'black',
-      }}
-    >
-      <Redirect href="/(tabs)/home" />
-    </View>
-  );
+  if (status === 'loading') {
+    return null;
+  }
+
+  return <Redirect href={status === 'authenticated' ? '/(tabs)/home' : '/(auth)/login'} />;
 }

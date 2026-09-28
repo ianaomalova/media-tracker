@@ -1,15 +1,122 @@
 import Screen from '@/components/Screen';
-import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
-import { router } from 'expo-router';
-import { View } from 'react-native';
+import { ScrollView, View, StyleSheet, Text } from 'react-native';
+import { Image } from 'expo-image';
+import Avatar from '@/components/profile/Avatar';
+import BadgeRole from '@/components/profile/BadgeRole';
+import { fontSize, semanticColors } from '@app/design-tokens';
+import ProfileStats from '@/components/profile/Statistics';
+import {
+  Bookmark,
+  List,
+  CircleCheck,
+  ChartNoAxesColumnIncreasing,
+  LogOut,
+} from 'lucide-react-native';
+import ProfileMenuSection from '@/components/profile/ProfileMenuSection';
+import ProfileMenuItem from '@/components/profile/ProfileMenuItem';
+import { useAuthStore } from '@/lib/auth/auth-store';
 
 export default function ProfileScreen() {
+  const signOut = useAuthStore((state) => state.status);
   return (
-    <Screen edges={['top']}>
-      <View style={{ gap: 16 }}>
-        <Button onPress={() => router.push('/(auth)/register')}>Регистрация</Button>
-      </View>
+    <Screen edges={[]}>
+      <ScrollView showsVerticalScrollIndicator={false} contentInsetAdjustmentBehavior="never">
+        <View style={styles.hero}>
+          <Image
+            source={require('@/assets/images/project-images/profile/background.png')}
+            style={styles.heroBackground}
+            contentFit="cover"
+          />
+          <View style={styles.profileInfo}>
+            <Avatar />
+            <View style={styles.profileNameContainer}>
+              <View style={styles.profileNameTextContainer}>
+                <Text style={styles.userName}>John Doe</Text>
+                <Text style={styles.userEmail}>john.doe@example.com</Text>
+              </View>
+              <BadgeRole role="user" />
+            </View>
+          </View>
+        </View>
+        <ProfileStats completed={42} inProgress={18} watchlist={12} />
+        <View style={styles.menu}>
+          <ProfileMenuSection>
+            <ProfileMenuItem icon={Bookmark} label="My Collections" onPress={() => {}} />
+
+            <ProfileMenuItem icon={List} label="Watchlist" onPress={() => {}} />
+
+            <ProfileMenuItem icon={CircleCheck} label="History" onPress={() => {}} />
+
+            <ProfileMenuItem
+              icon={ChartNoAxesColumnIncreasing}
+              label="Statistics"
+              showDivider={false}
+              onPress={() => {}}
+            />
+          </ProfileMenuSection>
+
+          <ProfileMenuSection>
+            <ProfileMenuItem
+              icon={LogOut}
+              label="Log Out"
+              danger
+              showDivider={false}
+              onPress={() => signOut}
+            />
+          </ProfileMenuSection>
+        </View>
+      </ScrollView>
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  hero: {
+    height: 250,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+
+  heroBackground: {
+    ...StyleSheet.absoluteFill,
+  },
+
+  profileInfo: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 22,
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+  },
+
+  profileNameContainer: {
+    gap: 16,
+  },
+
+  profileNameTextContainer: {
+    gap: 4,
+  },
+
+  userName: {
+    fontSize: fontSize['2xl'],
+    fontWeight: 'bold',
+    color: 'white',
+  },
+
+  userEmail: {
+    fontSize: fontSize.md,
+    color: semanticColors.text['little-muted'],
+  },
+
+  menu: {
+    gap: 26,
+
+    paddingHorizontal: 6,
+    paddingTop: 28,
+    paddingBottom: 40,
+  },
+});
