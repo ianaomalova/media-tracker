@@ -1,4 +1,4 @@
-import { saveTokens } from '@/lib/auth/auth-storage';
+import { useAuthStore } from '@/lib/auth/auth-store';
 import { ApiError, useAuthMobileLogin } from '@app/api-client';
 import { getErrorMessage } from '@app/utils';
 import type { LoginFormValues } from '@app/validation';
@@ -6,6 +6,7 @@ import { toast } from 'sonner-native';
 
 export function useLogin() {
   const { mutate: login, isPending } = useAuthMobileLogin();
+  const signIn = useAuthStore((state) => state.signIn);
 
   const onSubmit = (data: LoginFormValues) => {
     login(
@@ -17,7 +18,7 @@ export function useLogin() {
       },
       {
         onSuccess: async (response) => {
-          await saveTokens(response.accessToken, response.refreshToken);
+          await signIn(response);
           toast.success('Logged in');
         },
         onError: (error) => {

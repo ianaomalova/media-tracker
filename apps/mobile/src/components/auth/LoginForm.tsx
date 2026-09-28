@@ -9,6 +9,7 @@ import { Link } from 'expo-router';
 import { fontSize, semanticColors } from '@app/design-tokens';
 import Button from '../ui/Button';
 import { useLogin } from './useLogin';
+import { pages } from '@/configs/page.config';
 
 export default function LoginForm() {
   const { onSubmit, isPending } = useLogin();
@@ -74,7 +75,7 @@ export default function LoginForm() {
 
       <Text style={styles.loginLinkText}>
         Don't have an account?{'  '}
-        <Link href="/register" style={styles.loginLink}>
+        <Link href={pages.REGISTER} style={styles.loginLink}>
           Sign up
         </Link>
       </Text>

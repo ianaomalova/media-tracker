@@ -1,23 +1,48 @@
-import { DarkTheme, DefaultTheme, ThemeProvider, Slot } from 'expo-router';
+import { DarkTheme, ThemeProvider, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useAuthStore } from '@/lib/auth/auth-store';
+import { useEffect } from 'react';
 
 SplashScreen.preventAutoHideAsync();
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const status = useAuthStore((state) => state.status);
+  const hydrate = useAuthStore((state) => state.hydrate);
 
+  useEffect(() => {
+    void hydrate();
+  }, [hydrate]);
+
+  useEffect(() => {
+    if (status !== 'loading') {
+      void SplashScreen.hideAsync();
+    }
+  }, [status]);
+
+  if (status === 'loading') {
+    return null;
+  }
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
         <SafeAreaProvider>
           <ThemeProvider value={DarkTheme}>
-            <Slot />
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="index" />
+
+              <Stack.Protected guard={status === 'unauthenticated'}>
+                <Stack.Screen name="(auth)" />
+              </Stack.Protected>
+
+              <Stack.Protected guard={status === 'authenticated'}>
+                <Stack.Screen name="(tabs)" />
+              </Stack.Protected>
+            </Stack>
             <Toaster />
           </ThemeProvider>
         </SafeAreaProvider>

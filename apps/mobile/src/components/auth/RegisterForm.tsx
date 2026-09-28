@@ -9,6 +9,7 @@ import { useRegister } from './useRegister';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, type RegisterFormValues } from '@app/validation';
 import AuthScreenLayout from './AuthScreenLayout';
+import { pages } from '@/configs/page.config';
 
 export default function RegisterForm() {
   const { control, handleSubmit } = useForm<RegisterFormValues>({
@@ -87,7 +88,7 @@ export default function RegisterForm() {
       </Button>
       <Text style={styles.loginLinkText}>
         Already have an account?{'  '}
-        <Link href="/login" style={styles.loginLink}>
+        <Link href={pages.LOGIN} style={styles.loginLink}>
           Log in
         </Link>
       </Text>
