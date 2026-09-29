@@ -9,6 +9,7 @@
     "ext": "pnpm --filter ext",
     "dev": "concurrently \"pnpm mobile dev\" \"pnpm web dev\"",
     "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
