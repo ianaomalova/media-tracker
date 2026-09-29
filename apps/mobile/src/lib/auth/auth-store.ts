@@ -1,11 +1,4 @@
-import {
-  ApiError,
-  authMobileLogout,
-  userFindMe,
-  type AuthUserResponse,
-  type MobileAuthResponse,
-  type UserResponse,
-} from '@app/api-client';
+import { authMobileLogout, type MobileAuthResponse } from '@app/api-client';
 import { create } from 'zustand';
 
 import {
@@ -21,18 +14,14 @@ type AuthStatus = 'authenticated' | 'unauthenticated' | 'loading';
 
 interface AuthState {
   status: AuthStatus;
-  user: UserResponse | null;
 
   hydrate: () => Promise<void>;
   signIn: (response: MobileAuthResponse) => Promise<void>;
   signOut: () => Promise<void>;
-  updateUser: () => Promise<void>;
-  clearUser: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   status: 'loading',
-  user: null,
 
   hydrate: async () => {
     try {
@@ -42,9 +31,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         return;
       }
       await removeTokens();
-      set({ status: 'unauthenticated', user: null });
+      set({ status: 'unauthenticated' });
     } catch {
-      set({ status: 'unauthenticated', user: null });
+      set({ status: 'unauthenticated' });
     }
   },
 
@@ -53,10 +42,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     await saveRefreshToken(response.refreshToken);
     set({
       status: 'authenticated',
-      user: null,
     });
-
-    await get().updateUser();
   },
 
   signOut: async () => {
@@ -68,22 +54,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     } finally {
       await removeTokens();
       queryClient.clear();
-      set({ status: 'unauthenticated', user: null });
+      set({ status: 'unauthenticated' });
     }
-  },
-
-  updateUser: async () => {
-    try {
-      const user = await userFindMe();
-      set({ user });
-    } catch (error) {
-      if (error instanceof ApiError && error.status === 401) {
-        await get().signOut();
-      }
-    }
-  },
-
-  clearUser: () => {
-    set({ user: null, status: 'unauthenticated' });
   },
 }));

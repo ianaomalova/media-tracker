@@ -1,5 +1,5 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios';
-import type { MobileAuthResponse } from '../generated/api';
+import type { MobileAuthResponse } from '../generated/model';
 
 type TokenProvider = () => string | null | Promise<string | null>;
 
@@ -51,9 +51,11 @@ async function refreshTokens(): Promise<string | null> {
   const refreshToken = await refreshTokenProvider?.();
   if (!refreshToken) return null;
 
-  const { data } = await axiosInstance.post<MobileAuthResponse>('/auth/refresh', {
-    refreshToken,
-  });
+  const { data } = await axios.post<MobileAuthResponse>(
+    `${axiosInstance.defaults.baseURL}/auth/mobile/refresh`,
+    { refreshToken },
+    { timeout: 10000 },
+  );
 
   await tokensRefreshedHandler?.(data);
   return data.accessToken;
