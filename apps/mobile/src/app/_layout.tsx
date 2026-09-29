@@ -6,9 +6,10 @@ import { Toaster } from 'sonner-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useAuthStore } from '@/lib/auth/auth-store';
 import { useEffect } from 'react';
+import '@/lib/api/configure-api-client';
+import { queryClient } from '@/lib/api/query-client';
 
 SplashScreen.preventAutoHideAsync();
-const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const status = useAuthStore((state) => state.status);

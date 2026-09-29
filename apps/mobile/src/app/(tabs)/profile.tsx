@@ -15,16 +15,17 @@ import {
 import ProfileMenuSection from '@/components/profile/ProfileMenuSection';
 import ProfileMenuItem from '@/components/profile/ProfileMenuItem';
 import { useAuthStore } from '@/lib/auth/auth-store';
-import { useRouter } from 'expo-router';
+import { useCurrentUser } from '@/lib/auth/use-current-user';
 
 export default function ProfileScreen() {
+  const { data: user, isLoading } = useCurrentUser();
   const signOut = useAuthStore((state) => state.signOut);
-  const router = useRouter();
 
   const handleSignOut = async () => {
     await signOut();
-    router.replace('/(auth)/login');
   };
+
+  const displayName = user?.profile?.displayName ?? user?.username ?? 'User';
 
   return (
     <Screen edges={[]}>
@@ -39,10 +40,10 @@ export default function ProfileScreen() {
             <Avatar />
             <View style={styles.profileNameContainer}>
               <View style={styles.profileNameTextContainer}>
-                <Text style={styles.userName}>John Doe</Text>
-                <Text style={styles.userEmail}>john.doe@example.com</Text>
+                <Text style={styles.userName}>{displayName}</Text>
+                <Text style={styles.userEmail}>{user?.email}</Text>
               </View>
-              <BadgeRole role="user" />
+              <BadgeRole role={user?.role ?? 'user'} />
             </View>
           </View>
         </View>
