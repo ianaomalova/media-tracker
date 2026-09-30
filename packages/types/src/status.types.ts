@@ -1,6 +1,3 @@
-// export const STATUSES = ["want", "progress", "done"] as const;
-// export type TStatus = (typeof STATUSES)[number];
-
-import type { LibraryEntryResponseStatus } from '@app/api-client';
+import type { LibraryEntryResponseStatus } from '@app/api-client/model';
 
 export type TStatus = LibraryEntryResponseStatus;

@@ -7,6 +7,7 @@ export default defineConfig([
   {
     ignores: [
       '**/node_modules/**',
+      '**/src/generated/**',
       '**/dist/**',
       '**/.expo/**',
       '**/.next/**',
@@ -21,6 +22,15 @@ export default defineConfig([
   reactHooks.configs.flat.recommended,
   {
     files: ['**/*.{ts,tsx}'],
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          noWarnOnMultipleProjects: true,
+          project: ['apps/*/tsconfig.json', 'packages/*/tsconfig.json'],
+        },
+      },
+    },
     rules: {
       '@typescript-eslint/consistent-type-imports': [
         'error',

@@ -9,7 +9,6 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@app/types": "workspace:*",
-    "@app/api-client": "workspace:*"
+    "@app/types": "workspace:*"
   }
 }

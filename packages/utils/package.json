@@ -7,8 +7,5 @@
   "private": true,
   "exports": {
     ".": "./src/index.ts"
-  },
-  "dependencies": {
-    "@app/api-client": "workspace:*"
   }
 }
