@@ -1,5 +1,4 @@
-import { ApiError, useAuthMobileRegister } from '@app/api-client';
-import { getErrorMessage } from '@app/utils';
+import { getApiErrorMessage, useAuthMobileRegister } from '@app/api-client';
 import { type RegisterFormValues } from '@app/validation';
 import { toast } from 'sonner-native';
 import { useAuthStore } from '../model/auth-store';
@@ -22,12 +21,7 @@ export function useRegister() {
           toast.success('Account created');
         },
         onError: (error) => {
-          //TODO: change logic to use getErrorMessage
-          if (error instanceof ApiError) {
-            toast.error(getErrorMessage(error.status));
-            return;
-          }
-          toast.error('Failed to create account');
+          toast.error(getApiErrorMessage(error));
         },
       },
     );

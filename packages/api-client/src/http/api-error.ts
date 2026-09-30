@@ -1,12 +1,10 @@
-export class ApiError<T = unknown> extends Error {
-  readonly status: number;
-  readonly data: T;
-
-  constructor(status: number, message: string, data: T) {
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    readonly status?: number,
+    readonly data?: unknown,
+  ) {
     super(message);
-
     this.name = 'ApiError';
-    this.status = status;
-    this.data = data;
   }
 }

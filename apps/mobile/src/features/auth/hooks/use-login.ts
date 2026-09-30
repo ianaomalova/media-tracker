@@ -1,5 +1,4 @@
-import { ApiError, useAuthMobileLogin } from '@app/api-client';
-import { getErrorMessage } from '@app/utils';
+import { getApiErrorMessage, useAuthMobileLogin } from '@app/api-client';
 import type { LoginFormValues } from '@app/validation';
 import { toast } from 'sonner-native';
 import { useAuthStore } from '../model/auth-store';
@@ -22,12 +21,7 @@ export function useLogin() {
           toast.success('Logged in');
         },
         onError: (error) => {
-          //TODO: change logic to use getErrorMessage
-          if (error instanceof ApiError) {
-            toast.error(getErrorMessage(error.status));
-            return;
-          }
-          toast.error('Failed to login');
+          toast.error(getApiErrorMessage(error));
         },
       },
     );
