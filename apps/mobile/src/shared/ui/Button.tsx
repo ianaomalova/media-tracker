@@ -15,6 +15,7 @@ interface Props extends Omit<PressableProps, 'style'> {
   icon?: LucideIcon;
   variant?: 'primary' | 'secondary';
   iconOnly?: boolean;
+  foregroundColor?: string;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -22,11 +23,13 @@ export default function Button({
   children,
   icon: Icon,
   variant = 'primary',
+  foregroundColor,
   style,
   ...props
 }: Props) {
   const isPrimary = variant === 'primary';
   const iconOnly = Boolean(Icon && !children);
+  const contentColor = foregroundColor ?? (isPrimary ? colors.black : colors.white);
 
   return (
     <Pressable
@@ -39,10 +42,16 @@ export default function Button({
         style,
       ]}
     >
-      {Icon && <Icon size={22} strokeWidth={2} color={isPrimary ? colors.black : colors.white} />}
+      {Icon && <Icon size={22} strokeWidth={2} color={contentColor} />}
 
       {!iconOnly && children && (
-        <Text style={[styles.text, isPrimary ? styles.primaryText : styles.secondaryText]}>
+        <Text
+          style={[
+            styles.text,
+            isPrimary ? styles.primaryText : styles.secondaryText,
+            { color: contentColor },
+          ]}
+        >
           {children}
         </Text>
       )}

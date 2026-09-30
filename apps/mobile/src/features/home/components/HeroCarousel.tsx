@@ -8,10 +8,12 @@ import {
 } from 'react-native';
 import type { DiscoverItemResponse } from '@app/api-client';
 import { Image } from 'expo-image';
+import { GlassView } from 'expo-glass-effect';
+import { MEDIA_TYPE_CONFIG } from '@app/configs';
 import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
-import { Play, Plus, Star } from 'lucide-react-native';
+import { BookOpen, Gamepad2, Play, Plus, Star, type LucideIcon } from 'lucide-react-native';
 
 import Animated, {
   Extrapolation,
@@ -27,10 +29,42 @@ interface Props {
   items: DiscoverItemResponse[];
 }
 
+interface HeroActionConfig {
+  label: string;
+  icon: LucideIcon;
+}
+
+const HERO_ACTION_CONFIG = {
+  MOVIE: {
+    label: 'Watch Movie',
+    icon: Play,
+  },
+  TV_SHOW: {
+    label: 'Watch TV-Show',
+    icon: Play,
+  },
+  ANIME: {
+    label: 'Watch Anime',
+    icon: Play,
+  },
+  GAME: {
+    label: 'Play Game',
+    icon: Gamepad2,
+  },
+  BOOK: {
+    label: 'Read Book',
+    icon: BookOpen,
+  },
+} satisfies Record<DiscoverItemResponse['type'], HeroActionConfig>;
+
 export default function HeroCarousel({ items }: Props) {
   const { width } = useWindowDimensions();
   const [activeIndex, setActiveIndex] = useState(0);
   const activeItem = items[activeIndex];
+  const primaryAction = activeItem ? HERO_ACTION_CONFIG[activeItem.type] : null;
+  const activeColor = activeItem
+    ? MEDIA_TYPE_CONFIG[activeItem.type].color
+    : semanticColors.primary;
   const scrollX = useSharedValue(0);
 
   const scrollHandler = useAnimatedScrollHandler({
@@ -69,17 +103,29 @@ export default function HeroCarousel({ items }: Props) {
         ))}
       </View>
       <View style={styles.actions}>
-        <Button
-          icon={Play}
-          onPress={() => {
-            if (!activeItem) return;
-          }}
-        >
-          Watch Movie
-        </Button>
+        {primaryAction && (
+          <GlassView
+            isInteractive
+            glassEffectStyle="clear"
+            tintColor={activeColor}
+            style={styles.primaryActionGlass}
+          >
+            <Button
+              icon={primaryAction.icon}
+              foregroundColor="white"
+              style={styles.primaryActionButton}
+              onPress={() => {
+                if (!activeItem) return;
+              }}
+            >
+              {primaryAction.label}
+            </Button>
+          </GlassView>
+        )}
         <Button
           icon={Plus}
           variant="secondary"
+          style={[styles.addButton]}
           onPress={() => {
             if (!activeItem) return;
           }}
@@ -255,5 +301,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
     marginTop: 10,
+  },
+
+  primaryActionGlass: {
+    alignSelf: 'flex-start',
+    borderRadius: 999,
+    overflow: 'hidden',
+  },
+
+  primaryActionButton: {
+    backgroundColor: 'transparent',
+  },
+
+  addButton: {
+    borderWidth: 1,
   },
 });
