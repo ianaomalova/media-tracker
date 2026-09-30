@@ -1,7 +1,7 @@
 import MediaTypeBadge from '@/components/ui/MediaTypeBadge';
 import type { TitleListItemResponse } from '@app/api-client';
 import { Image } from 'expo-image';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 interface Props {
   item: TitleListItemResponse;

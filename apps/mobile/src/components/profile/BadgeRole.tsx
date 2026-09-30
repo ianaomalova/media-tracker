@@ -1,4 +1,4 @@
-import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
+import { fontSize, fontWeight } from '@app/design-tokens';
 import { View, Text, StyleSheet } from 'react-native';
 
 //TODO maybe to do different badges for different roles

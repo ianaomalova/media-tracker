@@ -18,7 +18,7 @@ import { useAuthStore } from '@/lib/auth/auth-store';
 import { useCurrentUser } from '@/lib/auth/use-current-user';
 
 export default function ProfileScreen() {
-  const { data: user, isLoading } = useCurrentUser();
+  const { data: user } = useCurrentUser();
   const signOut = useAuthStore((state) => state.signOut);
 
   const handleSignOut = async () => {

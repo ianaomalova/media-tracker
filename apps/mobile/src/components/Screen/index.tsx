@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, type Edges } from 'react-native-safe-area-context';
 
 interface Props {
   children: ReactNode;
-  edges?: Array<'top' | 'bottom' | 'left' | 'right'>;
+  edges?: Edges;
 }
 
 export default function Screen({ children, edges }: Props) {

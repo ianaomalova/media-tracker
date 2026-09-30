@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import Input from '../ui/Input';
 import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
 import Button from '../ui/Button';

@@ -1,9 +1,8 @@
 import { MEDIA_TYPE_CONFIG } from '@app/configs';
-import { semanticColors } from '@app/design-tokens';
 import type { TMediaType } from '@app/types';
 import { GlassView } from 'expo-glass-effect';
 import { Film, Tv, Gamepad2, BookOpen, Sparkles, type LucideIcon } from 'lucide-react-native';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 interface Props {
   type: TMediaType;

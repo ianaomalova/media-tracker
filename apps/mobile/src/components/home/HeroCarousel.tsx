@@ -76,8 +76,6 @@ export default function Carousel({ items }: Props) {
             icon={Play}
             onPress={() => {
               if (!activeItem) return;
-
-              console.log('Open:', activeItem.id);
             }}
           >
             Watch Movie
@@ -87,8 +85,6 @@ export default function Carousel({ items }: Props) {
             variant="secondary"
             onPress={() => {
               if (!activeItem) return;
-
-              console.log('Add:', activeItem.id);
             }}
           />
         </View>

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 
 interface Props {
   title: string;
@@ -11,5 +11,3 @@ export function Header({ title }: Props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({});
