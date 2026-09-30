@@ -2,3 +2,5 @@ pnpm expo start --ios
 
 pnpm --filter @app/api-client add -D orval  (install package)
 pnpm --filter @app/api-client generate (orval)
+
+ipconfig getifaddr en0

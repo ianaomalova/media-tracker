@@ -9,13 +9,14 @@ import {
   ChartNoAxesColumnIncreasing,
   LogOut,
 } from 'lucide-react-native';
-import { useAuthStore, useCurrentUser } from '@/features/auth';
+import { useAuthStore } from '@/features/auth';
 import {
   Avatar,
   BadgeRole,
   ProfileMenuItem,
   ProfileMenuSection,
   ProfileStats,
+  useCurrentUser,
 } from '@/features/profile';
 
 export default function ProfileScreen() {

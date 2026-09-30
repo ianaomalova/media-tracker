@@ -1,5 +1,5 @@
+import { useAuthStore } from '@/features/auth';
 import { useUserFindMe } from '@app/api-client';
-import { useAuthStore } from '../model/auth-store';
 
 export function useCurrentUser() {
   const status = useAuthStore((state) => state.status);

@@ -2,15 +2,16 @@ import {
   StyleSheet,
   useWindowDimensions,
   View,
+  Text,
   type NativeSyntheticEvent,
   type NativeScrollEvent,
 } from 'react-native';
-import type { TitleListItemResponse } from '@app/api-client';
+import type { DiscoverItemResponse } from '@app/api-client';
 import { Image } from 'expo-image';
 import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
-import { Play, Plus } from 'lucide-react-native';
+import { Play, Plus, Star } from 'lucide-react-native';
 
 import Animated, {
   Extrapolation,
@@ -23,7 +24,7 @@ import Animated, {
 import { Button, MediaTypeBadge } from '@/shared/ui';
 
 interface Props {
-  items: TitleListItemResponse[];
+  items: DiscoverItemResponse[];
 }
 
 export default function HeroCarousel({ items }: Props) {
@@ -51,7 +52,7 @@ export default function HeroCarousel({ items }: Props) {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.key}
         renderItem={({ item, index }) => (
           <HeroSlide item={item} width={width} index={index} scrollX={scrollX} />
         )}
@@ -62,36 +63,27 @@ export default function HeroCarousel({ items }: Props) {
         overScrollMode="never"
         directionalLockEnabled
       />
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginTop: 10,
-        }}
-      >
-        <View style={styles.actions}>
-          <Button
-            icon={Play}
-            onPress={() => {
-              if (!activeItem) return;
-            }}
-          >
-            Watch Movie
-          </Button>
-          <Button
-            icon={Plus}
-            variant="secondary"
-            onPress={() => {
-              if (!activeItem) return;
-            }}
-          />
-        </View>
-        <View style={styles.pagination}>
-          {items.map((item, index) => (
-            <View key={item.id} style={[styles.dot, index === activeIndex && styles.activeDot]} />
-          ))}
-        </View>
+      <View style={styles.pagination}>
+        {items.map((item, index) => (
+          <View key={item.key} style={[styles.dot, index === activeIndex && styles.activeDot]} />
+        ))}
+      </View>
+      <View style={styles.actions}>
+        <Button
+          icon={Play}
+          onPress={() => {
+            if (!activeItem) return;
+          }}
+        >
+          Watch Movie
+        </Button>
+        <Button
+          icon={Plus}
+          variant="secondary"
+          onPress={() => {
+            if (!activeItem) return;
+          }}
+        />
       </View>
     </View>
   );
@@ -103,7 +95,7 @@ function HeroSlide({
   index,
   scrollX,
 }: {
-  item: TitleListItemResponse;
+  item: DiscoverItemResponse;
   width: number;
   index: number;
   scrollX: SharedValue<number>;
@@ -145,16 +137,24 @@ function HeroSlide({
       />
       <View style={styles.content}>
         <Animated.Text style={[styles.title, contentStyle]}>{item.name}</Animated.Text>
-        <View style={{ gap: 5 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+        <View style={styles.detailsRow}>
+          <View style={styles.metaRow}>
             <MediaTypeBadge type={item.type} />
-            <Animated.Text style={[styles.meta, contentStyle]}>
-              Thrillers · Dramas · Action
+            <Animated.Text
+              numberOfLines={2}
+              ellipsizeMode="tail"
+              style={[styles.meta, contentStyle]}
+            >
+              {item.genres.join(' · ')}
             </Animated.Text>
           </View>
-          <Animated.Text style={[styles.description, contentStyle]}>
-            When an overachieving college senior...
-          </Animated.Text>
+          {item.rating !== null && (
+            <Animated.View style={[styles.rating, contentStyle]}>
+              <Star size={17} color="#FACC15" fill="#FACC15" />
+              <Text style={styles.ratingValue}>{item.rating.toFixed(1)}</Text>
+              <Text style={styles.ratingMax}>/ 10</Text>
+            </Animated.View>
+          )}
         </View>
       </View>
     </View>
@@ -184,11 +184,48 @@ const styles = StyleSheet.create({
   },
 
   meta: {
+    flexShrink: 1,
     fontSize: fontSize.md,
+    lineHeight: 22,
     color: semanticColors.text.primary,
   },
 
-  description: {
+  detailsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+
+  metaRow: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+
+  rating: {
+    flexShrink: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+
+    borderRadius: 999,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(250, 204, 21, 0.35)',
+    backgroundColor: 'rgba(0, 0, 0, 0.55)',
+  },
+
+  ratingValue: {
+    fontSize: fontSize.md,
+    fontWeight: fontWeight.bold,
+    color: semanticColors.text.primary,
+  },
+
+  ratingMax: {
     fontSize: fontSize.sm,
     color: semanticColors.text.muted,
   },
@@ -198,6 +235,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     gap: 8,
     marginRight: 20,
+    marginTop: 10,
   },
 
   dot: {
@@ -216,5 +254,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
+    marginTop: 10,
   },
 });
