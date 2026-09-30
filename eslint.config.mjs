@@ -41,6 +41,45 @@ export default defineConfig([
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
       '@typescript-eslint/no-explicit-any': 'error',
+      'import/no-restricted-paths': [
+        'error',
+        {
+          basePath: import.meta.dirname,
+          zones: [
+            {
+              target: './apps/mobile/src/shared',
+              from: './apps/mobile/src/features',
+              message: 'Shared modules must not depend on features.',
+            },
+            {
+              target: './apps/mobile/src/app',
+              from: './apps/mobile/src/features',
+              except: [
+                './auth/index.ts',
+                './home/index.ts',
+                './profile/index.ts',
+                './auth/model/configure-api-client.ts',
+              ],
+              message: 'App modules must import features through their public index.ts.',
+            },
+          ],
+        },
+      ],
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex: '^@/features/(?!auth/model/configure-api-client$)[^/]+/.+',
+              message: 'Import features through their public index.ts.',
+            },
+            {
+              regex: '^@/shared/(ui|api|configs)/.+',
+              message: 'Import shared modules through their public index.ts.',
+            },
+          ],
+        },
+      ],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },
