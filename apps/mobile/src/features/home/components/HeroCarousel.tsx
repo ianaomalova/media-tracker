@@ -9,10 +9,8 @@ import type { TitleListItemResponse } from '@app/api-client';
 import { Image } from 'expo-image';
 import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
 import { LinearGradient } from 'expo-linear-gradient';
-import MediaTypeBadge from '../ui/MediaTypeBadge';
 import { useState } from 'react';
 import { Play, Plus } from 'lucide-react-native';
-import Button from '../ui/Button';
 
 import Animated, {
   Extrapolation,
@@ -22,12 +20,13 @@ import Animated, {
   useSharedValue,
   type SharedValue,
 } from 'react-native-reanimated';
+import { Button, MediaTypeBadge } from '@/shared/ui';
 
 interface Props {
   items: TitleListItemResponse[];
 }
 
-export default function Carousel({ items }: Props) {
+export default function HeroCarousel({ items }: Props) {
   const { width } = useWindowDimensions();
   const [activeIndex, setActiveIndex] = useState(0);
   const activeItem = items[activeIndex];

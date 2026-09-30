@@ -8,7 +8,7 @@ import {
   saveAccessToken,
   saveRefreshToken,
 } from './auth-storage';
-import { queryClient } from '../api/query-client';
+import { queryClient } from '@/shared/api';
 
 type AuthStatus = 'authenticated' | 'unauthenticated' | 'loading';
 

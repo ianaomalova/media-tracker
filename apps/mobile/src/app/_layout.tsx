@@ -4,10 +4,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useAuthStore } from '@/lib/auth/auth-store';
 import { useEffect } from 'react';
-import '@/lib/api/configure-api-client';
-import { queryClient } from '@/lib/api/query-client';
+import '@/features/auth/model/configure-api-client';
+import { queryClient } from '@/shared/api';
+import { useAuthStore } from '@/features/auth';
 
 SplashScreen.preventAutoHideAsync();
 

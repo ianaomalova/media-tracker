@@ -1,11 +1,6 @@
 import { configureApiClient } from '@app/api-client';
-import {
-  getAccessToken,
-  getRefreshToken,
-  saveAccessToken,
-  saveRefreshToken,
-} from '@/lib/auth/auth-storage';
-import { useAuthStore } from '@/lib/auth/auth-store';
+import { getAccessToken, getRefreshToken, saveAccessToken, saveRefreshToken } from './auth-storage';
+import { useAuthStore } from './auth-store';
 
 const baseURL = process.env.EXPO_PUBLIC_API_URL;
 

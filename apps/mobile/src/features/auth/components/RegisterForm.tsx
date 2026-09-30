@@ -1,15 +1,14 @@
 import { StyleSheet, Text } from 'react-native';
-import Input from '../ui/Input';
 import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
-import Button from '../ui/Button';
 import { Mail, Lock } from 'lucide-react-native';
 import { Link } from 'expo-router';
 import { Controller, useForm } from 'react-hook-form';
-import { useRegister } from './useRegister';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, type RegisterFormValues } from '@app/validation';
+import { useRegister } from '../hooks/use-register';
 import AuthScreenLayout from './AuthScreenLayout';
-import { pages } from '@/configs/page.config';
+import { Button, Input } from '@/shared/ui';
+import { routes } from '@/shared/configs';
 
 export default function RegisterForm() {
   const { control, handleSubmit } = useForm<RegisterFormValues>({
@@ -88,7 +87,7 @@ export default function RegisterForm() {
       </Button>
       <Text style={styles.loginLinkText}>
         Already have an account?{'  '}
-        <Link href={pages.LOGIN} style={styles.loginLink}>
+        <Link href={routes.LOGIN} style={styles.loginLink}>
           Log in
         </Link>
       </Text>

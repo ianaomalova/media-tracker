@@ -1,6 +1,6 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import TitleCard from './TitleCard';
-import GlassButton from '@/components/ui/GlassButton';
+import { GlassButton } from '@/shared/ui';
 import { ChevronRight } from 'lucide-react-native';
 import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
 import type { TitleListItemResponse } from '@app/api-client';

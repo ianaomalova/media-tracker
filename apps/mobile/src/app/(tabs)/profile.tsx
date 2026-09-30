@@ -1,10 +1,7 @@
-import Screen from '@/components/Screen';
+import { Screen } from '@/shared/ui';
 import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import { Image } from 'expo-image';
-import Avatar from '@/components/profile/Avatar';
-import BadgeRole from '@/components/profile/BadgeRole';
 import { fontSize, semanticColors } from '@app/design-tokens';
-import ProfileStats from '@/components/profile/Statistics';
 import {
   Bookmark,
   List,
@@ -12,10 +9,14 @@ import {
   ChartNoAxesColumnIncreasing,
   LogOut,
 } from 'lucide-react-native';
-import ProfileMenuSection from '@/components/profile/ProfileMenuSection';
-import ProfileMenuItem from '@/components/profile/ProfileMenuItem';
-import { useAuthStore } from '@/lib/auth/auth-store';
-import { useCurrentUser } from '@/lib/auth/use-current-user';
+import { useAuthStore, useCurrentUser } from '@/features/auth';
+import {
+  Avatar,
+  BadgeRole,
+  ProfileMenuItem,
+  ProfileMenuSection,
+  ProfileStats,
+} from '@/features/profile';
 
 export default function ProfileScreen() {
   const { data: user } = useCurrentUser();

@@ -1,4 +1,4 @@
-import MediaTypeBadge from '@/components/ui/MediaTypeBadge';
+import { MediaTypeBadge } from '@/shared/ui';
 import type { TitleListItemResponse } from '@app/api-client';
 import { Image } from 'expo-image';
 import { View, StyleSheet } from 'react-native';

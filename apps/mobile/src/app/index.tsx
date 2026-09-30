@@ -1,5 +1,5 @@
+import { useAuthStore } from '@/features/auth';
 import { Redirect } from 'expo-router';
-import { useAuthStore } from '@/lib/auth/auth-store';
 
 export default function HomeScreen() {
   const status = useAuthStore((state) => state.status);

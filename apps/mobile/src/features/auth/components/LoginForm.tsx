@@ -1,15 +1,14 @@
 import { StyleSheet, Text } from 'react-native';
-import AuthScreenLayout from './AuthScreenLayout';
 import { Controller, useForm } from 'react-hook-form';
-import Input from '../ui/Input';
 import { Mail, Lock } from 'lucide-react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginFormValues } from '@app/validation';
 import { Link } from 'expo-router';
 import { fontSize, semanticColors } from '@app/design-tokens';
-import Button from '../ui/Button';
-import { useLogin } from './useLogin';
-import { pages } from '@/configs/page.config';
+import { useLogin } from '../hooks/use-login';
+import AuthScreenLayout from './AuthScreenLayout';
+import { Button, Input } from '@/shared/ui';
+import { routes } from '@/shared/configs';
 
 export default function LoginForm() {
   const { onSubmit, isPending } = useLogin();
@@ -75,7 +74,7 @@ export default function LoginForm() {
 
       <Text style={styles.loginLinkText}>
         Don&apos;t have an account?{'  '}
-        <Link href={pages.REGISTER} style={styles.loginLink}>
+        <Link href={routes.REGISTER} style={styles.loginLink}>
           Sign up
         </Link>
       </Text>

@@ -1,15 +1,15 @@
-import { useAuthStore } from '@/lib/auth/auth-store';
-import { ApiError, useAuthMobileLogin } from '@app/api-client';
+import { ApiError, useAuthMobileRegister } from '@app/api-client';
 import { getErrorMessage } from '@app/utils';
-import type { LoginFormValues } from '@app/validation';
+import { type RegisterFormValues } from '@app/validation';
 import { toast } from 'sonner-native';
+import { useAuthStore } from '../model/auth-store';
 
-export function useLogin() {
-  const { mutate: login, isPending } = useAuthMobileLogin();
+export function useRegister() {
+  const { mutate: register, isPending } = useAuthMobileRegister();
   const signIn = useAuthStore((state) => state.signIn);
 
-  const onSubmit = (data: LoginFormValues) => {
-    login(
+  const onSubmit = (data: RegisterFormValues) => {
+    register(
       {
         data: {
           email: data.email,
@@ -19,7 +19,7 @@ export function useLogin() {
       {
         onSuccess: async (response) => {
           await signIn(response);
-          toast.success('Logged in');
+          toast.success('Account created');
         },
         onError: (error) => {
           //TODO: change logic to use getErrorMessage
@@ -27,7 +27,7 @@ export function useLogin() {
             toast.error(getErrorMessage(error.status));
             return;
           }
-          toast.error('Failed to login');
+          toast.error('Failed to create account');
         },
       },
     );

@@ -1,6 +1,5 @@
-import Screen from '@/components/Screen';
-import Carousel from '@/components/home/HeroCarousel';
-import TitleSection from '@/components/home/TitleSection';
+import { Screen } from '@/shared/ui';
+import { HeroCarousel, TitleSection } from '@/features/home';
 import { SAMPLE_TITLES } from '@/mock.data';
 import { ScrollView, StyleSheet } from 'react-native';
 
@@ -14,7 +13,7 @@ export default function HomeScreen() {
         automaticallyAdjustContentInsets={false}
         showsVerticalScrollIndicator={false}
       >
-        <Carousel items={SAMPLE_TITLES} />
+        <HeroCarousel items={SAMPLE_TITLES} />
         <TitleSection items={SAMPLE_TITLES} heading="Top picks for you" />
         <TitleSection items={SAMPLE_TITLES} heading="Popular movies" />
       </ScrollView>

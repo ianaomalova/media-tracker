@@ -1,5 +1,5 @@
-import RegisterForm from '@/components/auth/RegisterForm';
-import Screen from '@/components/Screen';
+import { Screen } from '@/shared/ui';
+import { RegisterForm } from '@/features/auth';
 
 export default function Register() {
   return (
