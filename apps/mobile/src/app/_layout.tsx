@@ -42,6 +42,7 @@ export default function RootLayout() {
 
               <Stack.Protected guard={status === 'authenticated'}>
                 <Stack.Screen name="(tabs)" />
+                <Stack.Screen name="discover/[key]" />
               </Stack.Protected>
             </Stack>
             <Toaster />

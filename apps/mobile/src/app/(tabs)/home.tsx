@@ -2,6 +2,7 @@ import { Screen } from '@/shared/ui';
 import { HeroCarousel, HeroCarouselSkeleton, TitleSection, useTrending } from '@/features/home';
 import { SAMPLE_TITLES } from '@/mock.data';
 import { ScrollView, StyleSheet, View, Text, RefreshControl } from 'react-native';
+import { useAiGetRecommendations, useTitleFindAll } from '@app/api-client';
 
 export default function HomeScreen() {
   const {
@@ -11,6 +12,16 @@ export default function HomeScreen() {
     isRefetching: isTrendingRefetching,
     refetch: refetchTrending,
   } = useTrending(10);
+
+  // const {
+  //   data: recommendations,
+  //   isPending: isRecommendationsPending,
+  //   isError: isRecommendationsError,
+  //   isRefetching: isRecommendationsRefetching,
+  //   refetch: refetchRecommendations,
+  // } = useAiGetRecommendations();
+
+  // const { data: popularMovies } = useTitleFindAll();
 
   return (
     <Screen edges={[]}>

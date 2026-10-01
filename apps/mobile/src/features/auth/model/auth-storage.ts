@@ -12,6 +12,7 @@ export async function saveAccessToken(accessToken: string) {
 }
 
 export async function getAccessToken() {
+  const token = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
   return SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
 }
 

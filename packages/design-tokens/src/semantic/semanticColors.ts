@@ -23,4 +23,5 @@ export const semanticColors = {
     warning: '#F6A290',
     error: '#FF3F15',
   },
+  skeleton: 'rgba(255, 255, 255, 0.14)',
 } as const;
