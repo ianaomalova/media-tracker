@@ -6,8 +6,10 @@ import {
 } from '@app/api-client';
 import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
 import {
+  Gamepad,
   Gamepad2,
   Globe,
+  Joystick,
   Laptop,
   Monitor,
   Smartphone,
@@ -24,7 +26,7 @@ interface Props {
 
 export default function GameMeta({ metadata, creators }: Props) {
   const playtimeHours = readPlaytime(metadata.averagePlaytimeHours);
-  const platforms = readPlatforms(metadata.platforms);
+  const platforms = groupPlatforms(readPlatforms(metadata.platforms));
   const studio = readStudio(creators);
 
   if (playtimeHours == null && platforms.length === 0 && !studio) return null;
@@ -36,9 +38,10 @@ export default function GameMeta({ metadata, creators }: Props) {
           <Text style={styles.label}>Platforms:</Text>
           <View style={styles.icons}>
             {platforms.map((platform) => {
-              const Icon = platformIcon(platform);
+              const Icon = platform.icon;
+
               return (
-                <View key={platform} accessibilityLabel={platform}>
+                <View key={platform.family} accessibilityLabel={platform.label}>
                   <Icon size={18} strokeWidth={2} color={semanticColors.text.primary} />
                 </View>
               );
@@ -84,22 +87,76 @@ function formatPlaytime(hours: number) {
   return `${hours.toFixed(1)}h`;
 }
 
-function platformIcon(name: string): LucideIcon {
+function groupPlatforms(platforms: string[]) {
+  const groups = new Map<string, { icon: LucideIcon; names: string[] }>();
+
+  for (const platform of platforms) {
+    const { family, icon } = resolvePlatform(platform);
+    const group = groups.get(family);
+
+    if (group) {
+      group.names.push(platform);
+    } else {
+      groups.set(family, { icon, names: [platform] });
+    }
+  }
+
+  return [...groups.entries()].map(([family, group]) => ({
+    family,
+    icon: group.icon,
+    label: group.names.join(', '),
+  }));
+}
+
+function resolvePlatform(name: string): { family: string; icon: LucideIcon } {
   const key = name.toLowerCase();
 
-  if (key.includes('linux')) return Terminal;
-  if (key.includes('mac')) return Laptop;
-  if (key === 'pc' || key.includes('windows')) return Monitor;
-  if (key.includes('android') || key.includes('ios')) return Smartphone;
-  if (key.includes('web') || key.includes('browser')) return Globe;
+  if (key.includes('linux')) return { family: 'linux', icon: Terminal };
+  if (
+    key === 'mac' ||
+    key.includes('macos') ||
+    key.includes('mac os') ||
+    key.includes('macintosh')
+  ) {
+    return { family: 'mac', icon: Laptop };
+  }
+  if (key === 'pc' || key.includes('windows')) return { family: 'pc', icon: Monitor };
+  if (key.includes('android') || key === 'ios' || key.includes('iphone') || key.includes('ipad')) {
+    return { family: 'mobile', icon: Smartphone };
+  }
+  if (key.includes('web') || key.includes('browser')) return { family: 'web', icon: Globe };
+  if (key.includes('xbox')) return { family: 'xbox', icon: Gamepad2 };
+  if (
+    key.includes('playstation') ||
+    key.includes('psp') ||
+    key.includes('ps vita') ||
+    /^ps\d/.test(key)
+  ) {
+    return { family: 'playstation', icon: Gamepad };
+  }
+  if (
+    key.includes('nintendo') ||
+    key.includes('switch') ||
+    key.includes('wii') ||
+    key.includes('gamecube') ||
+    key.includes('game boy') ||
+    key.includes('gameboy') ||
+    key === 'nes' ||
+    key === 'snes' ||
+    key === 'ds' ||
+    key.includes('3ds')
+  ) {
+    return { family: 'nintendo', icon: Joystick };
+  }
 
-  return Gamepad2;
+  return { family: name, icon: Gamepad2 };
 }
 
 const styles = StyleSheet.create({
   block: {
-    gap: 6,
+    gap: 10,
     paddingHorizontal: 20,
+    marginTop: 20,
   },
 
   line: {

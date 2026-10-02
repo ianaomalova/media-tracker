@@ -8,13 +8,14 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 
 interface Props {
   cast: PersonResponse[];
+  title: string;
 }
 
-export default function Cast({ cast }: Props) {
+export default function Cast({ cast, title }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <Text style={styles.titleText}>Cast</Text>
+        <Text style={styles.titleText}>{title}</Text>
         <View style={styles.seeAll}>
           <Text style={styles.titleSeeAll}>See all</Text>
           <ChevronRight size={18} color={semanticColors.text.primary} />

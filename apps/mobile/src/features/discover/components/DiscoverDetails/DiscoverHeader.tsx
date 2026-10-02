@@ -5,6 +5,8 @@ import { Star } from 'lucide-react-native';
 import { useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 
+import { MediaTypeBadge } from '@/shared/ui';
+
 interface Props {
   data: DiscoverDetailsResponse;
 }
@@ -19,20 +21,16 @@ export default function DiscoverHeader({ data }: Props) {
   const [canExpand, setCanExpand] = useState(false);
 
   const metaItems = [
-    data.ageRating ? (
-      <View key="age" style={styles.ageRatingWrapper}>
-        <Text style={styles.ageRatingText}>{data.ageRating}</Text>
-      </View>
-    ) : null,
+    <MediaTypeBadge key="type" type={data.type} size="full" />,
     data.releaseDate ? (
       <Text key="date" style={styles.releaseDate}>
         {formatReleaseDate(data.releaseDate)}
       </Text>
     ) : null,
-    data.genres?.length ? (
-      <Text key="genres" style={styles.genres}>
-        {data.genres.join(' · ')}
-      </Text>
+    data.ageRating ? (
+      <View key="age" style={styles.ageRatingWrapper}>
+        <Text style={styles.ageRatingText}>{data.ageRating}</Text>
+      </View>
     ) : null,
     typeof data.metadata.runtimeMinutes === 'number' ? (
       <Text key="runtime" style={styles.runtime}>
@@ -40,6 +38,7 @@ export default function DiscoverHeader({ data }: Props) {
       </Text>
     ) : null,
   ].filter((item) => item != null);
+
   return (
     <View>
       <View style={styles.overlayAnchor}>
@@ -52,6 +51,9 @@ export default function DiscoverHeader({ data }: Props) {
                 : [<View key={`separator-${index}`} style={styles.separator} />, item],
             )}
           </View>
+          {data.genres?.length ? (
+            <Text style={styles.genres}>{data.genres.join(' · ')}</Text>
+          ) : null}
           {data.type === 'TV_SHOW' && (
             <View style={styles.tvMeta}>
               {typeof data.metadata.seasons === 'number' && (
@@ -67,6 +69,9 @@ export default function DiscoverHeader({ data }: Props) {
             <View style={styles.ratingWrapper}>
               <Star size={17} color={semanticColors.ratingStar} fill={semanticColors.ratingStar} />
               <Text style={styles.ratingValue}>{data.rating.toFixed(1)}</Text>
+              {data.ratingCount != null && data.ratingCount > 0 && (
+                <Text style={styles.ratingCount}>({formatCompactCount(data.ratingCount)})</Text>
+              )}
             </View>
           )}
           {data.description && <View style={styles.descriptionSlot} />}
@@ -99,6 +104,16 @@ export default function DiscoverHeader({ data }: Props) {
       )}
     </View>
   );
+}
+
+function formatCompactCount(value: number) {
+  if (value < 1000) return String(value);
+
+  const compact = value < 1_000_000 ? value / 1000 : value / 1_000_000;
+  const suffix = value < 1_000_000 ? 'K' : 'M';
+  const rounded = compact >= 10 ? Math.round(compact) : Math.round(compact * 10) / 10;
+
+  return `${rounded}${suffix}`;
 }
 
 const styles = StyleSheet.create({
@@ -134,16 +149,15 @@ const styles = StyleSheet.create({
     gap: 4,
   },
 
-  ageRatingWrapper: {
-    paddingHorizontal: 8,
-    paddingVertical: 1,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: semanticColors.text.primary,
-  },
+  ageRatingWrapper: {},
 
   ratingValue: {
     color: semanticColors.text.primary,
+    fontWeight: fontWeight.medium,
+  },
+
+  ratingCount: {
+    color: semanticColors.text['little-muted'],
     fontWeight: fontWeight.medium,
   },
 

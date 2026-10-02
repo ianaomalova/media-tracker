@@ -8,22 +8,22 @@ type MediaTypeConfig = {
 export const MEDIA_TYPE_CONFIG = {
   MOVIE: {
     label: 'Movie',
-    color: '#E5484D',
+    color: '#1E4A86',
   },
   TV_SHOW: {
     label: 'Series',
-    color: '#8E5CF6',
+    color: '#5A3C94',
   },
   GAME: {
     label: 'Game',
-    color: '#30A46C',
+    color: '#1A684C',
   },
   BOOK: {
     label: 'Book',
-    color: '#D97706',
+    color: '#8A4C18',
   },
   ANIME: {
     label: 'Anime',
-    color: '#E546A3',
+    color: '#8C3448',
   },
 } satisfies Record<TMediaType, MediaTypeConfig>;

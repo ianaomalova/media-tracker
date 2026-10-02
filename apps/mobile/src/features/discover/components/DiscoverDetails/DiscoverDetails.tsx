@@ -48,9 +48,10 @@ export default function DiscoverDetails({ discoverKey }: { discoverKey: string }
         {data.type === 'GAME' && (
           <GameMeta type={data.type} metadata={data.metadata} creators={data.creators} />
         )}
-        {(data.cast.length > 0 || data.creators.length > 0) && (
-          <Cast cast={data.cast && data.creators} />
-        )}
+        <View style={{ gap: 30 }}>
+          {data.cast.length > 0 && <Cast title="Cast" cast={data.cast} />}
+          {data.creators.length > 0 && <Cast title="Creators" cast={data.creators} />}
+        </View>
         {data.similar.length > 0 && (
           <TitleSection items={data.similar} heading="You may also like" />
         )}

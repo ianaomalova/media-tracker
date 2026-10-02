@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
   button: {
     width: 38,
     height: 38,
-    minWidth: 38,
     borderRadius: 999,
     overflow: 'hidden',
     alignSelf: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
     borderCurve: 'continuous',
     borderWidth: StyleSheet.hairlineWidth,
@@ -83,10 +83,8 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    width: 38,
-    minWidth: 38,
+    width: '100%',
     height: '100%',
-    paddingHorizontal: 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

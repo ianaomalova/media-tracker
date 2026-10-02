@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui';
+import { Button, GlassButton } from '@/shared/ui';
 import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
 import { Bookmark, ThumbsUp, CircleCheck, ThumbsDown, Share } from 'lucide-react-native';
 import { View, Text, StyleSheet } from 'react-native';
@@ -6,24 +6,34 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function DiscoverActions() {
   return (
     <View>
-      <Button variant="primary" icon={Bookmark} style={styles.addCollectionButton}>
-        Add to collection
-      </Button>
+      <View style={styles.addCollectionButtonContainer}>
+        <Button variant="primary" icon={Bookmark} style={styles.addCollectionButton}>
+          Add to collection
+        </Button>
+      </View>
       <View style={styles.actions}>
         <View style={styles.actionsItem}>
-          <Button iconOnly icon={CircleCheck} variant="secondary"></Button>
+          <GlassButton style={{ width: 54, height: 54 }} effect="regular">
+            <CircleCheck color={semanticColors.text.primary} />
+          </GlassButton>
           <Text style={styles.actionsItemText}>Watched</Text>
         </View>
         <View style={styles.actionsItem}>
-          <Button iconOnly icon={Share} variant="secondary"></Button>
+          <GlassButton style={{ width: 54, height: 54 }} effect="regular">
+            <Share color={semanticColors.text.primary} />
+          </GlassButton>
           <Text style={styles.actionsItemText}>Share</Text>
         </View>
         <View style={styles.actionsItem}>
-          <Button iconOnly icon={ThumbsUp} variant="secondary"></Button>
+          <GlassButton style={{ width: 54, height: 54 }} effect="regular">
+            <ThumbsUp color={semanticColors.text.primary} />
+          </GlassButton>
           <Text style={styles.actionsItemText}>Like</Text>
         </View>
         <View style={styles.actionsItem}>
-          <Button iconOnly icon={ThumbsDown} variant="secondary"></Button>
+          <GlassButton style={{ width: 54, height: 54 }} effect="regular">
+            <ThumbsDown color={semanticColors.text.primary} />
+          </GlassButton>
           <Text style={styles.actionsItemText}>Dislike</Text>
         </View>
       </View>
@@ -35,7 +45,7 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 16,
+    marginTop: 24,
     marginBottom: 12,
     paddingHorizontal: 10,
   },
@@ -52,8 +62,13 @@ const styles = StyleSheet.create({
     fontSize: fontSize.sm,
   },
 
-  addCollectionButton: {
+  addCollectionButtonContainer: {
     width: '100%',
-    marginTop: 16,
+    paddingHorizontal: 20,
+  },
+
+  addCollectionButton: {
+    marginTop: 10,
+    width: '100%',
   },
 });

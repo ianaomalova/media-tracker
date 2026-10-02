@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     gap: 8,
     marginRight: 20,
-    marginTop: 10,
+    marginTop: 15,
   },
 
   dot: {
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    marginTop: 10,
+    marginTop: 20,
   },
 
   primaryActionGlass: {

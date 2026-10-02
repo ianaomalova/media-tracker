@@ -50,7 +50,7 @@ export default function HeroCover({ item, style, imageStyle, contentStyle }: Pro
           </View>
           {item.rating !== null && (
             <Animated.View style={[styles.rating, contentStyle]}>
-              <Star size={17} color="#FACC15" fill="#FACC15" />
+              <Star size={17} color={semanticColors.ratingStar} fill={semanticColors.ratingStar} />
               <Text style={styles.ratingValue}>{item.rating.toFixed(1)}</Text>
             </Animated.View>
           )}
