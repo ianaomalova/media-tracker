@@ -41,6 +41,29 @@ export default function DiscoverDetails({ discoverKey }: { discoverKey: string }
     return <View></View>;
   }
 
+  const metaItems = [
+    data.ageRating ? (
+      <View key="age" style={styles.ageRatingWrapper}>
+        <Text style={styles.ageRatingText}>{data.ageRating}</Text>
+      </View>
+    ) : null,
+    data.releaseDate ? (
+      <Text key="date" style={styles.releaseDate}>
+        {formatReleaseDate(data.releaseDate)}
+      </Text>
+    ) : null,
+    data.genres?.length ? (
+      <Text key="genres" style={styles.genres}>
+        {data.genres.join(' · ')}
+      </Text>
+    ) : null,
+    typeof data.metadata.runtimeMinutes === 'number' ? (
+      <Text key="runtime" style={styles.runtime}>
+        {formatRuntime(data.metadata.runtimeMinutes)}
+      </Text>
+    ) : null,
+  ].filter((item) => item != null);
+
   return (
     <Screen edges={[]}>
       <ScrollView
@@ -61,27 +84,30 @@ export default function DiscoverDetails({ discoverKey }: { discoverKey: string }
           <View style={styles.content}>
             <Text style={styles.contentName}>{data.name || data.originalName}</Text>
             <View style={styles.header}>
-              {data.ageRating && (
-                <View style={styles.ageRatingWrapper}>
-                  <Text style={styles.ageRatingText}>{data.ageRating}</Text>
-                </View>
-              )}
-
-              {data.ageRating && <View style={styles.separator} />}
-
-              {data.releaseDate && (
-                <Text style={styles.releaseDate}>{formatReleaseDate(data.releaseDate)}</Text>
-              )}
-              <View style={styles.separator} />
-              {data.genres && <Text style={styles.genres}>{data.genres.join(' · ')}</Text>}
-              {data.genres && <View style={styles.separator} />}
-              {typeof data.metadata.runtimeMinutes === 'number' && (
-                <Text style={styles.runtime}>{formatRuntime(data.metadata.runtimeMinutes)}</Text>
+              {metaItems.flatMap((item, index) =>
+                index === 0
+                  ? [item]
+                  : [<View key={`separator-${index}`} style={styles.separator} />, item],
               )}
             </View>
+            {data.type === 'TV_SHOW' && (
+              <View style={styles.tvMeta}>
+                {typeof data.metadata.seasons === 'number' && (
+                  <Text style={styles.seasons}>{data.metadata.seasons} seasons</Text>
+                )}
+                <Text style={{ color: semanticColors.text.primary }}>·</Text>
+                {typeof data.metadata.episodes === 'number' && (
+                  <Text style={styles.episodes}>{data.metadata.episodes} episodes</Text>
+                )}
+              </View>
+            )}
             {data.rating && (
               <View style={styles.ratingWrapper}>
-                <Star size={17} color="#FACC15" fill="#FACC15" />
+                <Star
+                  size={17}
+                  color={semanticColors.ratingStar}
+                  fill={semanticColors.ratingStar}
+                />
                 <Text style={styles.ratingValue}>{data.rating.toFixed(1)}</Text>
               </View>
             )}
@@ -283,5 +309,20 @@ const styles = StyleSheet.create({
   addCollectionButton: {
     width: '100%',
     marginTop: 16,
+  },
+
+  tvMeta: {
+    flexDirection: 'row',
+    gap: 4,
+  },
+
+  seasons: {
+    color: semanticColors.text.primary,
+    fontWeight: fontWeight.medium,
+  },
+
+  episodes: {
+    color: semanticColors.text.primary,
+    fontWeight: fontWeight.medium,
   },
 });

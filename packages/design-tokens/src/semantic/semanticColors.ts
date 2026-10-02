@@ -24,4 +24,5 @@ export const semanticColors = {
     error: '#FF3F15',
   },
   skeleton: 'rgba(255, 255, 255, 0.14)',
+  ratingStar: '#FACC15',
 } as const;
