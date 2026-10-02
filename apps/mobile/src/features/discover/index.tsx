@@ -1,1 +1,1 @@
-export { default as DiscoverDetails } from './components/DiscoverDetails';
+export { default as DiscoverDetails } from './components/DiscoverDetails/DiscoverDetails';
