@@ -35,7 +35,7 @@ export default function Cast({ cast, title }: Props) {
               style={styles.image}
             />
 
-            <View>
+            <View style={styles.names}>
               <Text style={styles.name} numberOfLines={1}>
                 {splitName(item.name).first}
               </Text>
@@ -87,8 +87,11 @@ const styles = StyleSheet.create({
     fontWeight: fontWeight.medium,
   },
 
+  names: {
+    alignSelf: 'stretch',
+  },
+
   name: {
-    width: '100%',
     textAlign: 'center',
     color: semanticColors.text.primary,
     fontSize: fontSize.xs,
