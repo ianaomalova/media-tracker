@@ -3,10 +3,10 @@ import TitleCard from './TitleCard';
 import { GlassButton } from '@/shared/ui';
 import { ChevronRight } from 'lucide-react-native';
 import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
-import type { TitleListItemResponse } from '@app/api-client';
+import type { DiscoverItemResponse } from '@app/api-client';
 
 interface Props {
-  items: TitleListItemResponse[];
+  items: DiscoverItemResponse[];
   heading: string;
 }
 
@@ -24,7 +24,7 @@ export default function TitleSection({ items, heading }: Props) {
       <FlatList
         data={items}
         renderItem={({ item }) => <TitleCard item={item} />}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.key}
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.list}

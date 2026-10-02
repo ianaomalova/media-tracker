@@ -1,8 +1,9 @@
 import { Screen } from '@/shared/ui';
-import { HeroCarousel, HeroCarouselSkeleton, TitleSection, useTrending } from '@/features/home';
+import { HeroCarousel, HeroCarouselSkeleton, useTrending } from '@/features/home';
 import { SAMPLE_TITLES } from '@/mock.data';
 import { ScrollView, StyleSheet, View, Text, RefreshControl } from 'react-native';
 import { useAiGetRecommendations, useTitleFindAll } from '@app/api-client';
+import TitleSection from '@/shared/TitleSection';
 
 export default function HomeScreen() {
   const {
@@ -11,7 +12,7 @@ export default function HomeScreen() {
     isError: isTrendingError,
     isRefetching: isTrendingRefetching,
     refetch: refetchTrending,
-  } = useTrending(10);
+  } = useTrending(20);
 
   // const {
   //   data: recommendations,
@@ -48,9 +49,9 @@ export default function HomeScreen() {
             <Text>Error...</Text>
           </View>
         )}
-        {trending && <HeroCarousel items={trending} />}
-        <TitleSection items={SAMPLE_TITLES} heading="Top picks for you" />
-        <TitleSection items={SAMPLE_TITLES} heading="Popular movies" />
+        {trending && <HeroCarousel items={trending.slice(0, 10)} />}
+        {trending && <TitleSection items={trending.slice(10, 15)} heading="Top picks for you" />}
+        {trending && <TitleSection items={trending.slice(15, 20)} heading="Popular movies" />}
       </ScrollView>
     </Screen>
   );

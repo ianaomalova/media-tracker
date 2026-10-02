@@ -1,7 +1,9 @@
 import type { PersonResponse } from '@app/api-client';
-import { fontSize, semanticColors } from '@app/design-tokens';
+import { fontSize, fontWeight, semanticColors } from '@app/design-tokens';
 import { splitName } from '@app/utils';
 import { Image } from 'expo-image';
+import { Link } from 'expo-router';
+import { ChevronRight } from 'lucide-react-native';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 
 interface Props {
@@ -11,7 +13,13 @@ interface Props {
 export default function Cast({ cast }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Cast</Text>
+      <View style={styles.title}>
+        <Text style={styles.titleText}>Cast</Text>
+        <View style={styles.seeAll}>
+          <Text style={styles.titleSeeAll}>See all</Text>
+          <ChevronRight size={18} color={semanticColors.text.primary} />
+        </View>
+      </View>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -54,9 +62,28 @@ const styles = StyleSheet.create({
   },
 
   title: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+
+  seeAll: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  },
+
+  titleText: {
     color: semanticColors.text.primary,
     fontSize: fontSize.xl,
-    marginBottom: 16,
+    fontWeight: fontWeight.medium,
+  },
+
+  titleSeeAll: {
+    color: semanticColors.text.primary,
+    fontSize: fontSize.md,
+    fontWeight: fontWeight.medium,
   },
 
   name: {
